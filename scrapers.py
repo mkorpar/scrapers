@@ -8,6 +8,7 @@ def scrape_hep():
   open(hep_cache_file, 'a', encoding='utf-8').close()
   for i in range(7):
     d=(datetime.date.today() + datetime.timedelta(days=i)).strftime('%d.%m.%Y')
+    print("Hep checking: " + d)
     page = urlopen(url_base + d)
     html_bytes = page.read()
     html = html_bytes.decode('utf-8')
@@ -28,7 +29,7 @@ def main_loop():
   while True:
     print(str(datetime.datetime.now()) + " scraping")
     scrape_hep()
-    time.sleep(1800) # 1800 seconds = 30 minutes
+    time.sleep(1800) # 3600 seconds = 60 minutes
 
 if __name__ == "__main__":
   main_loop()
