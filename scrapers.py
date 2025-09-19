@@ -7,7 +7,7 @@ def scrape_hep():
   url_base='https://www.hep.hr/ods/bez-struje/19?dp=zagreb&el=ZG&datum='
   open(hep_cache_file, 'a', encoding='utf-8').close()
   for i in range(7):
-    d=(datetime.date.today() + datetime.timedelta(days=i - 16)).strftime('%d.%m.%Y')
+    d=(datetime.date.today() + datetime.timedelta(days=i)).strftime('%d.%m.%Y')
     page = urlopen(url_base + d)
     html_bytes = page.read()
     html = html_bytes.decode('utf-8')
