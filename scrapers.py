@@ -2,7 +2,7 @@ from urllib.request import urlopen
 import http.client, urllib, os, datetime, time
 
 url_base='https://www.hep.hr/ods/bez-struje/19?dp=zagreb&el=ZG&datum='
-cache_file = 'used_dates'
+cache_file = '/data/used_dates'
 
 def scrape_hep():
   open(cache_file, 'a', encoding='utf-8').close()
