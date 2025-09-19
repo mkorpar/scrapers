@@ -29,7 +29,7 @@ def main_loop():
   while True:
     print(str(datetime.datetime.now()) + " scraping")
     scrape_hep()
-    time.sleep(1800) # 3600 seconds = 60 minutes
+    time.sleep(3600) # 3600 seconds = 60 minutes
 
 if __name__ == "__main__":
   main_loop()
