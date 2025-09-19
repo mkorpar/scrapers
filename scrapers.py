@@ -1,17 +1,17 @@
 from urllib.request import urlopen
 import http.client, urllib, os, datetime, time
 
-url_base='https://www.hep.hr/ods/bez-struje/19?dp=zagreb&el=ZG&datum='
-cache_file = '/data/used_dates'
+hep_cache_file = '/data/hep_used_dates'
 
 def scrape_hep():
-  open(cache_file, 'a', encoding='utf-8').close()
+  url_base='https://www.hep.hr/ods/bez-struje/19?dp=zagreb&el=ZG&datum='
+  open(hep_cache_file, 'a', encoding='utf-8').close()
   for i in range(7):
-    d=(datetime.date.today() + datetime.timedelta(days=i)).strftime('%d.%m.%Y')
+    d=(datetime.date.today() + datetime.timedelta(days=i - 16)).strftime('%d.%m.%Y')
     page = urlopen(url_base + d)
     html_bytes = page.read()
     html = html_bytes.decode('utf-8')
-    if 'ogrizo' in html.lower() and d not in open(cache_file, 'r', encoding='utf-8').read():
+    if 'ogrizo' in html.lower() and d not in open(hep_cache_file, 'r', encoding='utf-8').read():
       print(d)
       conn = http.client.HTTPSConnection("api.pushover.net:443")
       conn.request("POST", "/1/messages.json",
@@ -22,7 +22,7 @@ def scrape_hep():
         'title': 'HEP',
       }), { "Content-type": "application/x-www-form-urlencoded" })
       conn.getresponse()
-      open(cache_file, 'a', encoding='utf-8').write(d + '\n')
+      open(hep_cache_file, 'a', encoding='utf-8').write(d + '\n')
 
 def main_loop():
   while True:
